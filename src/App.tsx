@@ -23,6 +23,22 @@ export default function App() {
     saveHabits(next);
   }
 
+  function toggleDone(id: string) {
+    const key = toDateKey(new Date());
+    const next = habits.map((h) =>
+      h.id !== id
+        ? h
+        : {
+            ...h,
+            doneDates: h.doneDates.includes(key)
+              ? h.doneDates.filter((d) => d !== key)
+              : [...h.doneDates, key],
+          },
+    );
+    setHabits(next);
+    saveHabits(next);
+  }
+
   return (
     <main className="app">
       <header className="app-header">
@@ -33,7 +49,7 @@ export default function App() {
       <section className="habits" aria-labelledby="habits-title">
         <h2 id="habits-title">Your habits</h2>
         <AddHabitForm onAdd={addHabit} />
-        <HabitList habits={habits} />
+        <HabitList habits={habits} onToggle={toggleDone} />
       </section>
     </main>
   );

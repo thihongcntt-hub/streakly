@@ -1,6 +1,11 @@
 import type { Habit } from '../store/habits';
+import { toDateKey } from '../lib/dates';
 
-export default function HabitList({ habits }: { habits: Habit[] }) {
+type Props = { habits: Habit[]; onToggle: (id: string) => void };
+
+export default function HabitList({ habits, onToggle }: Props) {
+  const todayKey = toDateKey(new Date());
+
   if (habits.length === 0) {
     return (
       <div className="empty">
@@ -12,11 +17,22 @@ export default function HabitList({ habits }: { habits: Habit[] }) {
 
   return (
     <ul className="habit-list">
-      {habits.map((habit) => (
-        <li key={habit.id} className="habit-row">
-          <span className="habit-name">{habit.name}</span>
-        </li>
-      ))}
+      {habits.map((habit) => {
+        const done = habit.doneDates.includes(todayKey);
+        return (
+          <li key={habit.id} className={done ? 'habit-row habit-row--done' : 'habit-row'}>
+            <span className="habit-name">{habit.name}</span>
+            <span className="done-toggle">
+              <input
+                type="checkbox"
+                aria-label="Done today"
+                checked={done}
+                onChange={() => onToggle(habit.id)}
+              />
+            </span>
+          </li>
+        );
+      })}
     </ul>
   );
 }
