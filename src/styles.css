@@ -95,6 +95,38 @@ a:focus-visible {
   letter-spacing: -0.01em;
 }
 
+.add-habit { margin-bottom: 16px; }
+
+.add-habit-row { display: flex; gap: 8px; }
+
+.add-habit-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.add-habit-row button {
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--streak);
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.add-habit-error {
+  margin: 6px 0 0;
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .empty {
   border: 1.5px dashed var(--line);
   border-radius: 16px;
