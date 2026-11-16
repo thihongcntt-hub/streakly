@@ -12,7 +12,7 @@ test('Adding a habit by name shows it in the list', async ({ page }) => {
 test('Clicking Add with an empty name shows an error and adds no habit', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Add' }).click();
-  await expect(page.getByRole('alert')).toHaveText('Please enter a habit name');
+  await expect(page.getByRole('alert')).toHaveText('Habit name is required');
   await expect(page.getByText('No habits yet')).toBeVisible();
 });
 
@@ -20,7 +20,7 @@ test('Clicking Add with only spaces in the name shows an error and adds no habit
   await page.goto('/');
   await page.getByRole('textbox', { name: 'New habit' }).fill('   ');
   await page.getByRole('button', { name: 'Add' }).click();
-  await expect(page.getByRole('alert')).toHaveText('Please enter a habit name');
+  await expect(page.getByRole('alert')).toHaveText('Habit name is required');
   await expect(page.getByText('No habits yet')).toBeVisible();
 });
 
