@@ -23,6 +23,13 @@ test('disables Add habit while the field is empty', async ({ page }) => {
   await expect(button).toBeEnabled();
 });
 
+test('whitespace-only name keeps Add habit disabled and adds no row', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('textbox', { name: 'Habit name' }).fill('   ');
+  await expect(page.getByRole('button', { name: 'Add habit' })).toBeDisabled();
+  await expect(page.getByRole('listitem')).toHaveCount(0);
+});
+
 test('keeps the habit after reload', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('textbox', { name: 'Habit name' }).fill('Read');
