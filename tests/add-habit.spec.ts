@@ -7,18 +7,11 @@ test('adding a habit by name shows it in the list', async ({ page }) => {
   await expect(page.getByRole('listitem').filter({ hasText: 'Read 10 pages' })).toBeVisible();
 });
 
-test('adding with an empty name shows an error and adds nothing', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('button', { name: 'Add' }).click();
-  await expect(page.getByRole('alert')).toBeVisible();
-  await expect(page.getByText('No habits yet')).toBeVisible();
-  await expect(page.locator('.habit-row')).toHaveCount(0);
-});
-
-test('empty name shows "Habit name is required"', async ({ page }) => {
+test('empty name shows "Habit name is required" and adds nothing', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Add' }).click();
   await expect(page.getByRole('alert')).toHaveText('Habit name is required');
+  await expect(page.getByText('No habits yet')).toBeVisible();
   await expect(page.locator('.habit-row')).toHaveCount(0);
 });
 
