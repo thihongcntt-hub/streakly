@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import WeekStrip from './components/WeekStrip';
 import HabitList from './components/HabitList';
-import { loadHabits, type Habit } from './store/habits';
+import AddHabitForm from './components/AddHabitForm';
+import { toDateKey } from './lib/dates';
+import { loadHabits, saveHabits, type Habit } from './store/habits';
 
 const dateLabel = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
 export default function App() {
-  const [habits] = useState<Habit[]>(loadHabits);
+  const [habits, setHabits] = useState<Habit[]>(loadHabits);
   const today = new Date();
+
+  function addHabit(name: string) {
+    const next: Habit[] = [
+      ...habits,
+      { id: crypto.randomUUID(), name, createdAt: toDateKey(new Date()), doneDates: [] },
+    ];
+    setHabits(next);
+    saveHabits(next);
+  }
 
   return (
     <main className="app">
@@ -18,6 +29,7 @@ export default function App() {
       <WeekStrip today={today} />
       <section className="habits" aria-labelledby="habits-title">
         <h2 id="habits-title">Your habits</h2>
+        <AddHabitForm onAdd={addHabit} />
         <HabitList habits={habits} />
       </section>
     </main>
