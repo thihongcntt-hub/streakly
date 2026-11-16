@@ -8,10 +8,10 @@ export default function AddHabitForm({ onAdd }: { onAdd: (name: string) => void 
     event.preventDefault();
     const trimmed = name.trim();
     if (!trimmed) {
-      setError('Please enter a habit name');
+      setError('Habit name is required');
       return;
     }
-    onAdd(trimmed);
+    onAdd(trimmed.slice(0, 60));
     setName('');
     setError('');
   }
